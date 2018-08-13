@@ -2,8 +2,12 @@ const express=require('express')
 const path=require('path')
 const app=express()
 
+
+app.set('view engine', 'ejs')
+app.set('views', path.resolve(__dirname))
+
 app.get('/',function(req,res){
-	res.sendFile(path.resolve(__dirname+"/index.html"))
+	res.render('index')
 })
 
 
