@@ -14,7 +14,7 @@
 		<body>
 
 			<header>
-				<h1> Bar chart </h1>
+				<h1> Federal Reserve Economic Data </h1>
 			</header>
 
 			<main>
@@ -36,9 +36,15 @@
 							const w=125*275
 							const h=1000
 
+
+							const domainHeight=20000
+
 							 const yScale = d3.scaleLinear()
-                     		.domain([0, 20000])
-                     		.range([0, 1000])
+                     		.domain([0, domainHeight])
+                     		.range([0, h])
+
+                     		
+
 
 							const svg = d3.select("body")
                  			.append("svg")
@@ -49,8 +55,8 @@
        						.data(dataset)
        						.enter()
        						.append("rect")
-       						.attr("x", (d, i) => i * 100)
-       						.attr("y", (d, i) => yScale(20000 -800-d[1]))
+       						.attr("x", (d, i) => (i * 100) +100)
+       						.attr("y", (d, i) => yScale(domainHeight -800-d[1]))
        						.attr("width", 25)
        						.attr("height", (d, i) => yScale(d[1]))
        						.attr("fill", "navy")
@@ -58,25 +64,35 @@
 
 
       						svg.append("text").attr("class", "x label")
-   							.attr("x", w/2).attr("y",yScale(19100)).text("Date").attr('font-weight','bold')
+   							.attr("x", w/2).attr("y",yScale(domainHeight)).text("Date").attr('font-weight','bold')
+
+   							svg.append("text").attr("class", "y label")
+   							.attr("x", 0).attr("y",yScale(domainHeight/2)).text("GDP").attr('font-weight','bold')
+
+
 
        						svg.selectAll("text.values")
        						.data(dataset)
        						.enter()
        						.append("text")
       						.text((d) => d[0])
-       						.attr("x", (d, i) => i * 100)
-      						.attr("y", (d, i) => yScale(20000-400))
+       						.attr("x", (d, i) => (i * 100)+100)
+      						.attr("y", (d, i) => yScale(domainHeight-400))
 
        						svg.selectAll("text.labels")
        						.data(dataset)
        						.enter()
        						.append("text")
       						.text((d) => d[1])
-       						.attr("x", (d, i) => i * 100)
-      						.attr("y", (d, i) => yScale(20000 - d[1]-1200))
+       						.attr("x", (d, i) => (i * 100)+100)
+      						.attr("y", (d, i) => yScale(domainHeight - d[1]-1200))
 
 
+      						const yAxisScale = d3.scale.linear().range([domainHeight, 0])
+                     		const yAxis= d3.axisLeft(yAxisScale)
+   							svg.append("g")
+        					.attr("class", "y axis")
+        					.call(yAxis)
 
        						
 
