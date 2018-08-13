@@ -35,6 +35,11 @@
 
 							const w=25*100*275
 							const h=19110
+							
+
+							 const yScale = d3.scaleLinear()
+                     						.domain([0, h])
+                     						.range([200, 1000])
 
 							const svg = d3.select("body")
                  			.append("svg")
@@ -46,9 +51,9 @@
        						.enter()
        						.append("rect")
        						.attr("x", (d, i) => i * 100)
-       						.attr("y", (d, i) => h -100-d[1])
+       						.attr("y", (d, i) => yScale(h-d[1]))
        						.attr("width", 25)
-       						.attr("height", (d, i) => d[1])
+       						.attr("height", (d, i) => yScale(d[1]))
        						.attr("fill", "navy")
        						.attr('class','bar')
 
@@ -58,7 +63,7 @@
        						.append("text")
       						.text((d) => d[0])
        						.attr("x", (d, i) => i * 100)
-      						.attr("y", (d, i) => h-20)
+      						.attr("y", (d, i) => yScale(h))
 
        						svg.selectAll("text.labels")
        						.data(dataset)
@@ -66,7 +71,7 @@
        						.append("text")
       						.text((d) => d[1])
        						.attr("x", (d, i) => i * 100)
-      						.attr("y", (d, i) => h - ( d[1])-120)
+      						.attr("y", (d, i) => yScale(h - d[1]-120))
 
 
        						
