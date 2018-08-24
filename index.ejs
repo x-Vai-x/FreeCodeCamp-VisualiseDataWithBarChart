@@ -20,6 +20,7 @@
 			<main>
 				<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 				<script src="https://d3js.org/d3.v5.js"></script>
+        <script src="https://d3js.org/d3-axis.v1.min.js"></script>
 
 				<script>
 					$(document).ready(function(){
@@ -43,6 +44,8 @@
                      		.domain([0, domainHeight])
                      		.range([0, h])
 
+
+
                      		
 
 
@@ -51,7 +54,9 @@
                   			.attr("width", w)
                   			.attr("height", h)
 
-                  			svg.selectAll("rect")
+             
+
+                   svg.selectAll("rect")
        						.data(dataset)
        						.enter()
        						.append("rect")
@@ -68,6 +73,16 @@
 
    							svg.append("text").attr("class", "y label")
    							.attr("x", 0).attr("y",yScale(domainHeight/2)).text("GDP").attr('font-weight','bold')
+
+
+                const yAxisScale = d3.scaleLinear()
+                        .domain([0, domainHeight])
+                        .range([yScale(domainHeight-800),0])
+                 const yAxis= d3.axisLeft().scale(yAxisScale)
+                 svg.append("g")
+                 .attr("transform", "translate(90, 0)")
+                .attr("class", "y axis")
+                .call(yAxis)
 
 
 
@@ -88,11 +103,8 @@
       						.attr("y", (d, i) => yScale(domainHeight - d[1]-1200))
 
 
-      						const yAxisScale = d3.scale.linear().range([domainHeight, 0])
-                     		const yAxis= d3.axisLeft(yAxisScale)
-   							svg.append("g")
-        					.attr("class", "y axis")
-        					.call(yAxis)
+      						
+               
 
        						
 
